@@ -36,10 +36,10 @@ pipeline {
 }
 
 def pythonVersionInstall(envVersion, pyAPIVsersion){
-    sh "bash -c 'source /home/mech_mind_sdk/py_env/${envVersion}/bin/activate'"
-    sh "bash -c 'python3 -m pip install --upgrade pip -i ${PIP_MIRRORS}'"
-    sh "bash -c 'python3 -m pip uninstall mecheyeapi --yes'"
-    sh "bash -c 'python3 -m pip install ${pyAPIVsersion} -i ${PIP_MIRRORS}'"
-    sh "bash -c 'python3 /var/lib/jenkins/workspace/${WORKSPACE}/TestPythonInstall/print_camera_info.py ${CAM_IP}'"
-    sh "bash -c 'deactivate'"
+    sh ". /home/mech_mind_sdk/py_env/${envVersion}/bin/activate"
+    sh "python3 -m pip install --upgrade pip -i ${PIP_MIRRORS}"
+    sh "python3 -m pip uninstall mecheyeapi --yes"
+    sh "python3 -m pip install ${pyAPIVsersion} -i ${PIP_MIRRORS}"
+    sh "python3 /var/lib/jenkins/workspace/${WORKSPACE}/TestPythonInstall/print_camera_info.py ${CAM_IP}"
+    sh "deactivate"
 }
