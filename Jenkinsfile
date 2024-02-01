@@ -9,7 +9,7 @@ pipeline {
         DEB_PACKAGE = 'Mech-Eye_API_2.3.0_amd64.deb'  // cpp package
         WHEEL_PACKAGE = 'MechEyeAPI-2.3.0-cp38-cp38-manylinux_2_27_x86_64.whl'  // wheel python3.8
 
-        WORKSPACE = 'MMIND_TEST_CI_main'
+        WORKSPACE = 'MMIND_TEST_Python_CI'
         REPO_URL = 'https://github.com/changlelian/MechMindAPICI.git'
         PIP_MIRRORS = 'https://pypi.tuna.tsinghua.edu.cn/simple'
     }
@@ -40,6 +40,6 @@ def pythonVersionInstall(envVersion, pyAPIVsersion){
     sh "python3 -m pip install --upgrade pip -i ${PIP_MIRRORS}"
     sh "python3 -m pip uninstall mecheyeapi --yes"
     sh "python3 -m pip install ${pyAPIVsersion} -i ${PIP_MIRRORS}"
-    sh "python3 TestPythonInstall/print_camera_info.py ${CAM_IP}"
+    sh "python3 /var/lib/jenkins/workspace/${WORKSPACE}/TestPythonInstall/print_camera_info.py ${CAM_IP}"
     sh "deactivate"
 }
