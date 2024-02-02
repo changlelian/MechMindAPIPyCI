@@ -39,7 +39,7 @@ def pythonVersionInstall(envVersion, pyAPIVsersion){
     sh ". /home/mech_mind_sdk/py_env/${envVersion}/bin/activate"
     sh "sudo /home/mech_mind_sdk/py_env/${envVersion}/bin/python3 -m pip install --upgrade pip -i ${PIP_MIRRORS}"
     sh "sudo /home/mech_mind_sdk/py_env/${envVersion}/bin/python3 -m pip uninstall mecheyeapi --yes"
-    sh "sudo /home/mech_mind_sdk/py_env/${envVersion}/bin/python3 -m pip install ${pyAPIVsersion} -i ${PIP_MIRRORS}"
+    sh "sudo /home/mech_mind_sdk/py_env/${envVersion}/bin/python3 -m pip install /var/lib/jenkins/workspace/${pyAPIVsersion} -i ${PIP_MIRRORS}"
     sh "sudo /home/mech_mind_sdk/py_env/${envVersion}/bin/python3 /var/lib/jenkins/workspace/${WORKSPACE}/TestPythonInstall/print_camera_info.py ${CAM_IP}"
     sh "deactivate"
 }
