@@ -9,8 +9,8 @@ pipeline {
         DEB_PACKAGE = 'Mech-Eye_API_2.3.0_amd64.deb'  // cpp package
         WHEEL_PACKAGE = 'MechEyeAPI-2.3.0-cp38-cp38-manylinux_2_27_x86_64.whl'  // wheel python3.8
 
-        WINDOWS_JENKINS_WORKSPACE = 'C:\\Users\\mech-mind_lcl\\Desktop\\python_environment'
-        WINDOWS_VENV_PATH = 'E:\\jenkins_workspace\\workspace\\python_environment'
+        WINDOWS_JENKINS_WORKSPACE = 'E:\\jenkins_workspace'
+        WINDOWS_VENV_PATH = 'C:\\Users\\mech-mind_lcl\\Desktop\\python_environment'
         
         WORKSPACE = 'MMIND_TEST_Python_CI_main'
         REPO_URL = 'https://github.com/changlelian/MechMindAPICI.git'
