@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     environment {
-        CAM_IP = '192.168.20.202'   // camera
+        CAM_IP = '192.168.20.2'   // camera
         LNX_IP = '192.168.20.199'   // profiler
         OTHER_IP = '192.168.20.159'    // profiler virtual
         DEB_PACKAGE = 'Mech-Eye_API_2.3.0_amd64.deb'  // cpp package
@@ -44,6 +44,9 @@ pipeline {
             steps {
                 // Windows相关的构建步骤
                 bat 'echo Running on Windows'
+                bat "E:\\jenkins_workspace\\workspace\\python_environment\\venv10\\Scripts\\activate"
+                bat "E:\\jenkins_workspace\\workspace\\python_environment\\venv10\\Scripts\\pip install E:\jenkins_workspace\workspace\MechEyeAPI-2.3.0-cp310-cp310-win_amd64.whl"
+                bat "E:\jenkins_workspace\workspace\python_environment\venv10\Scripts\python.exe E:\jenkins_workspace\workspace\MMIND_TEST_Python_CI_main\TestPythonInstall\print_camera_info.py ${CAM_IP}"
             }
         }       
     }
