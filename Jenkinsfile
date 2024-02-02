@@ -21,7 +21,11 @@ pipeline {
             }
         }
 
-        stage('Test Python37-311 Environmet') {
+        stage('Test Amd Python37-311 Environmet') {
+            agent {
+                label 'mm_amd64'
+            }
+
             steps {
                 script {
                     pythonVersionInstall('venv37', 'MechEyeAPI-2.3.0-cp37-cp37m-manylinux_2_27_x86_64.whl')
@@ -32,6 +36,16 @@ pipeline {
                 }
             }
         }
+
+        stage('Test Windows Python37-311 Environmet') {
+            agent {
+                label 'mm_windows'
+            }
+            steps {
+                // Windows相关的构建步骤
+                bat 'echo Running on Windows'
+            }
+        }       
     }
 }
 
