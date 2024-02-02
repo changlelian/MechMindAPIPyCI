@@ -2,6 +2,10 @@
 pipeline {
     agent any
 
+    triggers {
+        cron('H 0,3,5,22 * * *')
+    }
+
     environment {
         CAM_IP = '192.168.20.2'   // camera
         LNX_IP = '192.168.20.199'   // profiler
@@ -24,21 +28,21 @@ pipeline {
             }
         }
 
-        // stage('Test Amd Python37-311 Environmet') {
-        //     agent {
-        //         label 'mm_amd64'
-        //     }
+        stage('Test Amd Python37-311 Environmet') {
+            agent {
+                label 'mm_amd64'
+            }
 
-        //     steps {
-        //         script {
-        //             pythonVersionLinuxInstall('venv37', 'MechEyeAPI-2.3.0-cp37-cp37m-manylinux_2_27_x86_64.whl')
-        //             pythonVersionLinuxInstall('venv38', 'MechEyeAPI-2.3.0-cp38-cp38-manylinux_2_27_x86_64.whl')
-        //             pythonVersionLinuxInstall('venv39', 'MechEyeAPI-2.3.0-cp39-cp39-manylinux_2_27_x86_64.whl')
-        //             pythonVersionLinuxInstall('venv310', 'MechEyeAPI-2.3.0-cp310-cp310-manylinux_2_27_x86_64.whl')
-        //             pythonVersionLinuxInstall('venv311', 'MechEyeAPI-2.3.0-cp311-cp311-manylinux_2_27_x86_64.whl')
-        //         }
-        //     }
-        // }
+            steps {
+                script {
+                    pythonVersionLinuxInstall('venv37', 'MechEyeAPI-2.3.0-cp37-cp37m-manylinux_2_27_x86_64.whl')
+                    pythonVersionLinuxInstall('venv38', 'MechEyeAPI-2.3.0-cp38-cp38-manylinux_2_27_x86_64.whl')
+                    pythonVersionLinuxInstall('venv39', 'MechEyeAPI-2.3.0-cp39-cp39-manylinux_2_27_x86_64.whl')
+                    pythonVersionLinuxInstall('venv310', 'MechEyeAPI-2.3.0-cp310-cp310-manylinux_2_27_x86_64.whl')
+                    pythonVersionLinuxInstall('venv311', 'MechEyeAPI-2.3.0-cp311-cp311-manylinux_2_27_x86_64.whl')
+                }
+            }
+        }
 
         stage('Test Windows Python37-311 Environmet') {
             agent {
