@@ -9,6 +9,9 @@ pipeline {
         DEB_PACKAGE = 'Mech-Eye_API_2.3.0_amd64.deb'  // cpp package
         WHEEL_PACKAGE = 'MechEyeAPI-2.3.0-cp38-cp38-manylinux_2_27_x86_64.whl'  // wheel python3.8
 
+        WINDOWS_JENKINS_WORKSPACE = 'E:\\jenkins_workspace\\workspace'
+        WINDOWS_VENV_PATH = 'E:\\jenkins_workspace\\workspace\\python_environment'
+        
         WORKSPACE = 'MMIND_TEST_Python_CI_main'
         REPO_URL = 'https://github.com/changlelian/MechMindAPICI.git'
         PIP_MIRRORS = 'https://pypi.tuna.tsinghua.edu.cn/simple'
@@ -44,9 +47,9 @@ pipeline {
             steps {
                 // Windows相关的构建步骤
                 bat 'echo Running on Windows'
-                bat "E:\\jenkins_workspace\\workspace\\python_environment\\venv10\\Scripts\\activate"
-                bat "E:\\jenkins_workspace\\workspace\\python_environment\\venv10\\Scripts\\pip install E:\\jenkins_workspace\\workspace\\MechEyeAPI-2.3.0-cp310-cp310-win_amd64.whl"
-                bat "E:\\jenkins_workspace\\workspace\\python_environment\\venv10\\Scripts\\python.exe E:\\jenkins_workspace\\workspace\\MMIND_TEST_Python_CI_main\\TestPythonInstall\\print_camera_info.py ${CAM_IP}"
+                bat "${WINDOWS_VENV_PATH}\\venv10\\Scripts\\activate"
+                bat "${WINDOWS_VENV_PATH}\\venv10\\Scripts\\pip.exe install ${WINDOWS_VENV_PATH}\\python_wheels\\MechEyeAPI-2.3.0-cp310-cp310-win_amd64.whl"
+                bat "${WINDOWS_VENV_PATH}\\venv10\\Scripts\\python.exe ${WINDOWS_JENKINS_WORKSPACE}\\MMIND_TEST_Python_CI_main\\TestPythonInstall\\print_camera_info.py ${CAM_IP}"
             }
         }       
     }
