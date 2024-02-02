@@ -31,11 +31,11 @@ pipeline {
 
         //     steps {
         //         script {
-        //             pythonVersionInstall('venv37', 'MechEyeAPI-2.3.0-cp37-cp37m-manylinux_2_27_x86_64.whl')
-        //             pythonVersionInstall('venv38', 'MechEyeAPI-2.3.0-cp38-cp38-manylinux_2_27_x86_64.whl')
-        //             pythonVersionInstall('venv39', 'MechEyeAPI-2.3.0-cp39-cp39-manylinux_2_27_x86_64.whl')
-        //             pythonVersionInstall('venv310', 'MechEyeAPI-2.3.0-cp310-cp310-manylinux_2_27_x86_64.whl')
-        //             pythonVersionInstall('venv311', 'MechEyeAPI-2.3.0-cp311-cp311-manylinux_2_27_x86_64.whl')
+        //             pythonVersionLinuxInstall('venv37', 'MechEyeAPI-2.3.0-cp37-cp37m-manylinux_2_27_x86_64.whl')
+        //             pythonVersionLinuxInstall('venv38', 'MechEyeAPI-2.3.0-cp38-cp38-manylinux_2_27_x86_64.whl')
+        //             pythonVersionLinuxInstall('venv39', 'MechEyeAPI-2.3.0-cp39-cp39-manylinux_2_27_x86_64.whl')
+        //             pythonVersionLinuxInstall('venv310', 'MechEyeAPI-2.3.0-cp310-cp310-manylinux_2_27_x86_64.whl')
+        //             pythonVersionLinuxInstall('venv311', 'MechEyeAPI-2.3.0-cp311-cp311-manylinux_2_27_x86_64.whl')
         //         }
         //     }
         // }
@@ -45,21 +45,29 @@ pipeline {
                 label 'mm_windows'
             }
             steps {
-                // Windows相关的构建步骤
-                bat 'echo Running on Windows'
-                bat "${WINDOWS_VENV_PATH}\\venv10\\Scripts\\activate"
-                bat "${WINDOWS_VENV_PATH}\\venv10\\Scripts\\pip.exe install ${WINDOWS_VENV_PATH}\\python_wheels\\MechEyeAPI-2.3.0-cp310-cp310-win_amd64.whl"
-                bat "${WINDOWS_VENV_PATH}\\venv10\\Scripts\\python.exe ${WINDOWS_JENKINS_WORKSPACE}\\workspace\\MMIND_TEST_Python_CI_main\\TestPythonInstall\\print_camera_info.py ${CAM_IP}"
+                pythonVersionWindowsInstall('venv37', 'MechEyeAPI-2.3.0-cp37-cp37m-win_amd64.whl')
+                pythonVersionWindowsInstall('venv38', 'MechEyeAPI-2.3.0-cp38-cp38-win_amd64.whl')
+                pythonVersionWindowsInstall('venv39', 'MechEyeAPI-2.3.0-cp39-cp39-win_amd64.whl')
+                pythonVersionWindowsInstall('venv10', 'MechEyeAPI-2.3.0-cp310-cp310-win_amd64.whl')
+                pythonVersionWindowsInstall('venv311', 'MechEyeAPI-2.3.0-cp311-cp311-win_amd64.whl')
+
             }
         }       
     }
 }
 
-def pythonVersionInstall(envVersion, pyAPIVsersion){
+def pythonVersionLinuxInstall(envVersion, pyAPIVsersion){
     sh ". /home/mech_mind_sdk/py_env/${envVersion}/bin/activate"
     sh "sudo /home/mech_mind_sdk/py_env/${envVersion}/bin/python3 -m pip install --upgrade pip -i ${PIP_MIRRORS}"
     sh "sudo /home/mech_mind_sdk/py_env/${envVersion}/bin/python3 -m pip uninstall mecheyeapi --yes"
     sh "sudo /home/mech_mind_sdk/py_env/${envVersion}/bin/python3 -m pip install /var/lib/jenkins/workspace/${pyAPIVsersion} -i ${PIP_MIRRORS}"
     sh "sudo /home/mech_mind_sdk/py_env/${envVersion}/bin/python3 /var/lib/jenkins/workspace/${WORKSPACE}/TestPythonInstall/print_camera_info.py ${CAM_IP}"
     // sh "deactivate"
+}
+
+
+def pythonVersionWindowsInstall(envVersion, pyAPIVsersion){
+    bat "${WINDOWS_VENV_PATH}\\${envVersion}\\Scripts\\activate"
+    bat "${WINDOWS_VENV_PATH}\\${envVersion}\\Scripts\\pip.exe install ${WINDOWS_VENV_PATH}\\python_wheels\\${pyAPIVsersion}"
+    bat "${WINDOWS_VENV_PATH}\\${envVersion}\\Scripts\\python.exe ${WINDOWS_JENKINS_WORKSPACE}\\workspace\\MMIND_TEST_Python_CI_main\\TestPythonInstall\\print_camera_info.py ${CAM_IP}"
 }
