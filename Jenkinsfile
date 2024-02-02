@@ -9,7 +9,7 @@ pipeline {
         DEB_PACKAGE = 'Mech-Eye_API_2.3.0_amd64.deb'  // cpp package
         WHEEL_PACKAGE = 'MechEyeAPI-2.3.0-cp38-cp38-manylinux_2_27_x86_64.whl'  // wheel python3.8
 
-        WORKSPACE = 'MMIND_TEST_Python_CI'
+        WORKSPACE = 'MMIND_TEST_Python_CI_main'
         REPO_URL = 'https://github.com/changlelian/MechMindAPICI.git'
         PIP_MIRRORS = 'https://pypi.tuna.tsinghua.edu.cn/simple'
     }
