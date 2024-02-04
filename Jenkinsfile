@@ -2,9 +2,9 @@
 pipeline {
     agent any
 
-    triggers {
-        cron('H 0,3,5,22 * * *')
-    }
+    // triggers {
+    //     cron('H 0,3,5,22 * * *')
+    // }
 
     environment {
         CAM_IP = '192.168.20.2'   // camera
