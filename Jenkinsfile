@@ -9,7 +9,6 @@ pipeline {
     environment {
         CAM_IP = '192.168.20.2'   // camera
         LNX_IP = '192.168.20.199'   // profiler
-        OTHER_IP = '192.168.20.159'    // profiler virtual
         DEB_PACKAGE = 'Mech-Eye_API_2.3.0_amd64.deb'  // cpp package
         WHEEL_PACKAGE = 'MechEyeAPI-2.3.0-cp38-cp38-manylinux_2_27_x86_64.whl'  // wheel python3.8
 
@@ -79,6 +78,8 @@ def pythonVersionAmd64Install(envVersion, pyAPIVsersion){
     sh "sudo /home/mech_mind_sdk/py_env/${envVersion}/bin/python3 -m pip uninstall mecheyeapi --yes"
     sh "sudo /home/mech_mind_sdk/py_env/${envVersion}/bin/python3 -m pip install /var/lib/jenkins/workspace/${pyAPIVsersion} -i ${PIP_MIRRORS}"
     sh "sudo /home/mech_mind_sdk/py_env/${envVersion}/bin/python3 /var/lib/jenkins/workspace/${WORKSPACE}/TestPythonInstall/print_camera_info.py ${CAM_IP}"
+    sh "sudo /home/mech_mind_sdk/py_env/${envVersion}/bin/python3 /var/lib/jenkins/workspace/${WORKSPACE}/TestPythonInstall/print_profiler_info.py ${LNX_IP}"
+
 }
 
 def pythonVersionArm64Install(envVersion, pyAPIVsersion){
@@ -87,6 +88,8 @@ def pythonVersionArm64Install(envVersion, pyAPIVsersion){
     sh "sudo /home/nvidia/CI/py_env/${envVersion}/bin/python3 -m pip uninstall mecheyeapi --yes"
     sh "sudo /home/nvidia/CI/py_env/${envVersion}/bin/python3 -m pip install /home/nvidia/CI/python_wheels/${pyAPIVsersion} -i ${PIP_MIRRORS}"
     sh "sudo /home/nvidia/CI/py_env/${envVersion}/bin/python3 /home/nvidia/CI/jenkins_workspace/workspace/${WORKSPACE}/TestPythonInstall/print_camera_info.py ${CAM_IP}"
+    sh "sudo /home/nvidia/CI/py_env/${envVersion}/bin/python3 /home/nvidia/CI/jenkins_workspace/workspace/${WORKSPACE}/TestPythonInstall/print_profiler_info.py ${LNX_IP}"
+
 }
 
 
@@ -95,5 +98,6 @@ def pythonVersionWindowsInstall(envVersion, pyAPIVsersion){
     bat "${WINDOWS_VENV_PATH}\\${envVersion}\\Scripts\\activate"
     bat "${WINDOWS_VENV_PATH}\\${envVersion}\\Scripts\\pip.exe install ${WINDOWS_VENV_PATH}\\python_wheels\\${pyAPIVsersion}"
     bat "${WINDOWS_VENV_PATH}\\${envVersion}\\Scripts\\python.exe ${WINDOWS_JENKINS_WORKSPACE}\\workspace\\MMIND_TEST_Python_CI_main\\TestPythonInstall\\print_camera_info.py ${CAM_IP}"
+    bat "${WINDOWS_VENV_PATH}\\${envVersion}\\Scripts\\python.exe ${WINDOWS_JENKINS_WORKSPACE}\\workspace\\MMIND_TEST_Python_CI_main\\TestPythonInstall\\print_profiler_info.py ${LNX_IP}"
 }
 
