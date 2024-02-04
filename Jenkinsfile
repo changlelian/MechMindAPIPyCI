@@ -79,7 +79,6 @@ def pythonVersionAmd64Install(envVersion, pyAPIVsersion){
     sh "sudo /home/mech_mind_sdk/py_env/${envVersion}/bin/python3 -m pip uninstall mecheyeapi --yes"
     sh "sudo /home/mech_mind_sdk/py_env/${envVersion}/bin/python3 -m pip install /var/lib/jenkins/workspace/${pyAPIVsersion} -i ${PIP_MIRRORS}"
     sh "sudo /home/mech_mind_sdk/py_env/${envVersion}/bin/python3 /var/lib/jenkins/workspace/${WORKSPACE}/TestPythonInstall/print_camera_info.py ${CAM_IP}"
-    // sh "deactivate"
 }
 
 def pythonVersionArm64Install(envVersion, pyAPIVsersion){
@@ -87,8 +86,7 @@ def pythonVersionArm64Install(envVersion, pyAPIVsersion){
     sh "sudo /home/nvidia/CI/py_env/${envVersion}/bin/python3 -m pip install --upgrade pip -i ${PIP_MIRRORS}"
     sh "sudo /home/nvidia/CI/py_env/${envVersion}/bin/python3 -m pip uninstall mecheyeapi --yes"
     sh "sudo /home/nvidia/CI/py_env/${envVersion}/bin/python3 -m pip install /home/nvidia/CI/python_wheels/${pyAPIVsersion} -i ${PIP_MIRRORS}"
-    // sh "sudo /home/nvidia/CI/py_env/${envVersion}/bin/python3 /var/lib/jenkins/workspace/${WORKSPACE}/TestPythonInstall/print_camera_info.py ${CAM_IP}"
-    // sh "deactivate"
+    sh "sudo /home/nvidia/CI/py_env/${envVersion}/bin/python3 /home/nvidia/CI/jenkins_workspace/workspace/${WORKSPACE}/TestPythonInstall/print_camera_info.py ${CAM_IP}"
 }
 
 
