@@ -28,18 +28,31 @@ pipeline {
             }
         }
 
-        stage('Test Amd Python37-311 Environmet') {
+        stage('Test Amd64 Python37-311 Environmet') {
             agent {
                 label 'mm_amd64'
             }
 
             steps {
                 script {
-                    pythonVersionLinuxInstall('venv37', 'MechEyeAPI-2.3.0-cp37-cp37m-manylinux_2_27_x86_64.whl')
-                    pythonVersionLinuxInstall('venv38', 'MechEyeAPI-2.3.0-cp38-cp38-manylinux_2_27_x86_64.whl')
-                    pythonVersionLinuxInstall('venv39', 'MechEyeAPI-2.3.0-cp39-cp39-manylinux_2_27_x86_64.whl')
-                    pythonVersionLinuxInstall('venv310', 'MechEyeAPI-2.3.0-cp310-cp310-manylinux_2_27_x86_64.whl')
-                    pythonVersionLinuxInstall('venv311', 'MechEyeAPI-2.3.0-cp311-cp311-manylinux_2_27_x86_64.whl')
+                    pythonVersionAmd64Install('venv37', 'MechEyeAPI-2.3.0-cp37-cp37m-manylinux_2_27_x86_64.whl')
+                    pythonVersionAmd64Install('venv38', 'MechEyeAPI-2.3.0-cp38-cp38-manylinux_2_27_x86_64.whl')
+                    pythonVersionAmd64Install('venv39', 'MechEyeAPI-2.3.0-cp39-cp39-manylinux_2_27_x86_64.whl')
+                    pythonVersionAmd64Install('venv310', 'MechEyeAPI-2.3.0-cp310-cp310-manylinux_2_27_x86_64.whl')
+                    pythonVersionAmd64Install('venv311', 'MechEyeAPI-2.3.0-cp311-cp311-manylinux_2_27_x86_64.whl')
+                }
+            }
+        }
+
+        stage('Test Arm64 Python37-311 Environmet') {
+            agent {
+                label 'mm_arm64'
+            }
+
+            steps {
+                script {
+                    pythonVersionArm64Install('venv37', 'MechEyeAPI-2.3.0-cp37-cp37m-manylinux_2_27_aarch64.whl')
+                    pythonVersionArm64Install('venv38', 'MechEyeAPI-2.3.0-cp38-cp38-manylinux_2_27_aarch64.whl')
                 }
             }
         }
@@ -60,7 +73,7 @@ pipeline {
     }
 }
 
-def pythonVersionLinuxInstall(envVersion, pyAPIVsersion){
+def pythonVersionAmd64Install(envVersion, pyAPIVsersion){
     sh ". /home/mech_mind_sdk/py_env/${envVersion}/bin/activate"
     sh "sudo /home/mech_mind_sdk/py_env/${envVersion}/bin/python3 -m pip install --upgrade pip -i ${PIP_MIRRORS}"
     sh "sudo /home/mech_mind_sdk/py_env/${envVersion}/bin/python3 -m pip uninstall mecheyeapi --yes"
@@ -69,9 +82,20 @@ def pythonVersionLinuxInstall(envVersion, pyAPIVsersion){
     // sh "deactivate"
 }
 
+def pythonVersionArm64Install(envVersion, pyAPIVsersion){
+    sh ". /home/nvidia/CI/py_env/${envVersion}/bin/activate"
+    sh "sudo /home/nvidia/CI/py_env/${envVersion}/bin/python3 -m pip install --upgrade pip -i ${PIP_MIRRORS}"
+    sh "sudo /home/nvidia/CI/py_env/${envVersion}/bin/python3 -m pip uninstall mecheyeapi --yes"
+    sh "sudo /home/nvidia/CI/py_env/${envVersion}/bin/python3 -m pip install /home/nvidia/CI/python_wheels/${pyAPIVsersion} -i ${PIP_MIRRORS}"
+    // sh "sudo /home/nvidia/CI/py_env/${envVersion}/bin/python3 /var/lib/jenkins/workspace/${WORKSPACE}/TestPythonInstall/print_camera_info.py ${CAM_IP}"
+    // sh "deactivate"
+}
+
+
 
 def pythonVersionWindowsInstall(envVersion, pyAPIVsersion){
     bat "${WINDOWS_VENV_PATH}\\${envVersion}\\Scripts\\activate"
     bat "${WINDOWS_VENV_PATH}\\${envVersion}\\Scripts\\pip.exe install ${WINDOWS_VENV_PATH}\\python_wheels\\${pyAPIVsersion}"
     bat "${WINDOWS_VENV_PATH}\\${envVersion}\\Scripts\\python.exe ${WINDOWS_JENKINS_WORKSPACE}\\workspace\\MMIND_TEST_Python_CI_main\\TestPythonInstall\\print_camera_info.py ${CAM_IP}"
 }
+
