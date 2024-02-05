@@ -55,10 +55,24 @@ pipeline {
                             }
                         }
                     }
+                }
+
+                stage('Test Build Windows Samples') {
+                    agent {
+                        label 'mm_windows'
+                    }
+
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            script {
+                                bat "E:\\jenkins_workspace\\workspace\\${WORKSPACE}\\TestBuildSamples\\build_win_samples.bat"
+                            }
+                        }
+                    }
                 }                  
             }           
         }
-        
+
         stage('Test Amd64 Python37-311 Environmet') {
             agent {
                 label 'mm_amd64'
