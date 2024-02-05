@@ -36,7 +36,7 @@ pipeline {
 
                     steps {
                         script {
-                            sh "sudo . /var/lib/jenkins/workspace/${WORKSPACE}/TestBuildSamples/build_amd_samples.sh"
+                            sh "sudo sh /var/lib/jenkins/workspace/${WORKSPACE}/TestBuildSamples/build_amd_samples.sh"
                         }
                     }
                 }
@@ -48,7 +48,7 @@ pipeline {
 
                     steps {
                         script {
-                            sh "sudo . /home/nvidia/CI/jenkins_workspace/workspace/${WORKSPACE}/TestBuildSamples/build_amd_samples.sh"
+                            sh "sudo sh /home/nvidia/CI/jenkins_workspace/workspace/${WORKSPACE}/TestBuildSamples/build_amd_samples.sh"
                         }
                     }
                 }                  
