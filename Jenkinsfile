@@ -7,8 +7,8 @@ pipeline {
     // }
 
     environment {
-        CAM_IP = '192.168.20.120'   // camera
-        LNX_IP = '192.168.20.90'   // profiler
+        CAM_IP = '192.168.20.14'   // camera
+        LNX_IP = '192.168.20.113'   // profiler
         DEB_PACKAGE = 'Mech-Eye_API_2.3.0_amd64.deb'  // cpp package
         WHEEL_PACKAGE = 'MechEyeAPI-2.3.0-cp38-cp38-manylinux_2_27_x86_64.whl'  // wheel python3.8
 
