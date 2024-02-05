@@ -27,48 +27,79 @@ pipeline {
             }
         }
 
-        stage('Test Amd64 Python37-311 Environmet') {
-            agent {
-                label 'mm_amd64'
-            }
+        stage('Test Build Samples'){
+            parallel {
+                stage('Test Build AMD64 Samples') {
+                    agent {
+                        label 'mm_amd64'
+                    }
 
-            steps {
-                script {
-                    pythonVersionAmd64Install('venv37', 'MechEyeAPI-2.3.0-cp37-cp37m-manylinux_2_27_x86_64.whl')
-                    pythonVersionAmd64Install('venv38', 'MechEyeAPI-2.3.0-cp38-cp38-manylinux_2_27_x86_64.whl')
-                    pythonVersionAmd64Install('venv39', 'MechEyeAPI-2.3.0-cp39-cp39-manylinux_2_27_x86_64.whl')
-                    pythonVersionAmd64Install('venv310', 'MechEyeAPI-2.3.0-cp310-cp310-manylinux_2_27_x86_64.whl')
-                    pythonVersionAmd64Install('venv311', 'MechEyeAPI-2.3.0-cp311-cp311-manylinux_2_27_x86_64.whl')
+                    steps {
+                        script {
+                            sh "sudo ./var/lib/jenkins/workspace/${WORKSPACE}/TestBuildSamples/build_amd_samples.sh"
+                        }
+                    }
+                }
+
+                stage('Test Build ARM64 Samples') {
+                    agent {
+                        label 'mm_arm64'
+                    }
+
+                    steps {
+                        script {
+                            sh "sudo ./home/nvidia/CI/jenkins_workspace/workspace/${WORKSPACE}/TestBuildSamples/build_amd_samples.sh"
+                        }
+                    }
+                }                  
+            }           
+        }
+        stage('Test Python Env'){
+            parallel {
+                stage('Test Amd64 Python37-311 Environmet') {
+                    agent {
+                        label 'mm_amd64'
+                    }
+
+                    steps {
+                        script {
+                            pythonVersionAmd64Install('venv37', 'MechEyeAPI-2.3.0-cp37-cp37m-manylinux_2_27_x86_64.whl')
+                            pythonVersionAmd64Install('venv38', 'MechEyeAPI-2.3.0-cp38-cp38-manylinux_2_27_x86_64.whl')
+                            pythonVersionAmd64Install('venv39', 'MechEyeAPI-2.3.0-cp39-cp39-manylinux_2_27_x86_64.whl')
+                            pythonVersionAmd64Install('venv310', 'MechEyeAPI-2.3.0-cp310-cp310-manylinux_2_27_x86_64.whl')
+                            pythonVersionAmd64Install('venv311', 'MechEyeAPI-2.3.0-cp311-cp311-manylinux_2_27_x86_64.whl')
+                        }
+                    }
+                }
+
+                stage('Test Arm64 Python37-311 Environmet') {
+                    agent {
+                        label 'mm_arm64'
+                    }
+
+                    steps {
+                        script {
+                            pythonVersionArm64Install('venv37', 'MechEyeAPI-2.3.0-cp37-cp37m-manylinux_2_27_aarch64.whl')
+                            pythonVersionArm64Install('venv38', 'MechEyeAPI-2.3.0-cp38-cp38-manylinux_2_27_aarch64.whl')
+                        }
+                    }
+                }
+
+                stage('Test Windows Python37-311 Environmet') {
+                    agent {
+                        label 'mm_windows'
+                    }
+                    steps {
+                        pythonVersionWindowsInstall('venv37', 'MechEyeAPI-2.3.0-cp37-cp37m-win_amd64.whl')
+                        pythonVersionWindowsInstall('venv38', 'MechEyeAPI-2.3.0-cp38-cp38-win_amd64.whl')
+                        pythonVersionWindowsInstall('venv39', 'MechEyeAPI-2.3.0-cp39-cp39-win_amd64.whl')
+                        pythonVersionWindowsInstall('venv10', 'MechEyeAPI-2.3.0-cp310-cp310-win_amd64.whl')
+                        pythonVersionWindowsInstall('venv311', 'MechEyeAPI-2.3.0-cp311-cp311-win_amd64.whl')
+
+                    }
                 }
             }
-        }
-
-        stage('Test Arm64 Python37-311 Environmet') {
-            agent {
-                label 'mm_arm64'
-            }
-
-            steps {
-                script {
-                    pythonVersionArm64Install('venv37', 'MechEyeAPI-2.3.0-cp37-cp37m-manylinux_2_27_aarch64.whl')
-                    pythonVersionArm64Install('venv38', 'MechEyeAPI-2.3.0-cp38-cp38-manylinux_2_27_aarch64.whl')
-                }
-            }
-        }
-
-        stage('Test Windows Python37-311 Environmet') {
-            agent {
-                label 'mm_windows'
-            }
-            steps {
-                pythonVersionWindowsInstall('venv37', 'MechEyeAPI-2.3.0-cp37-cp37m-win_amd64.whl')
-                pythonVersionWindowsInstall('venv38', 'MechEyeAPI-2.3.0-cp38-cp38-win_amd64.whl')
-                pythonVersionWindowsInstall('venv39', 'MechEyeAPI-2.3.0-cp39-cp39-win_amd64.whl')
-                pythonVersionWindowsInstall('venv10', 'MechEyeAPI-2.3.0-cp310-cp310-win_amd64.whl')
-                pythonVersionWindowsInstall('venv311', 'MechEyeAPI-2.3.0-cp311-cp311-win_amd64.whl')
-
-            }
-        }       
+        }  
     }
 }
 

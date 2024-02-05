@@ -6,8 +6,8 @@ sudo dpkg -P MechEyeApi
 
 sudo rm -rf /opt/mech-mind
 
-amd64_installer=Mech-Eye_API_2.3.0_amd64.deb
-arm64_installer=Mech-Eye_API_2.3.0_arm64.deb
+amd64_installer=/var/lib/jenkins/workspace/Mech-Eye_API_2.3.0_amd64.deb
+arm64_installer=/home/nvidia/CI/Mech-Eye_API_2.3.0_arm64.deb
 
 architecture=$(uname -m)
 
