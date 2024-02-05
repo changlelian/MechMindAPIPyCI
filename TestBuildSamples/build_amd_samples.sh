@@ -54,8 +54,8 @@ build_projects="
     profiler/AcquireProfileDataUsingCallback
     profiler/ManageUserSets
     profiler/UseVirtualDevice
-    # area_scan_3d_camera/Pcl/ConvertPointCloudWithNormalsToPcl
-    # area_scan_3d_camera/Pcl/ConvertPointCloudToPcl
+    area_scan_3d_camera/Pcl/ConvertPointCloudWithNormalsToPcl
+    area_scan_3d_camera/Pcl/ConvertPointCloudToPcl
 "
 
 # open the samples path 

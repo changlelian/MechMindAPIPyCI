@@ -35,8 +35,10 @@ pipeline {
                     }
 
                     steps {
-                        script {
-                            sh "sudo sh /var/lib/jenkins/workspace/${WORKSPACE}/TestBuildSamples/build_amd_samples.sh"
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            script {
+                                sh "sudo sh /var/lib/jenkins/workspace/${WORKSPACE}/TestBuildSamples/build_amd_samples.sh"
+                            }
                         }
                     }
                 }
@@ -47,8 +49,10 @@ pipeline {
                     }
 
                     steps {
-                        script {
-                            sh "sudo sh /home/nvidia/CI/jenkins_workspace/workspace/${WORKSPACE}/TestBuildSamples/build_amd_samples.sh"
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            script {
+                                sh "sudo sh /home/nvidia/CI/jenkins_workspace/workspace/${WORKSPACE}/TestBuildSamples/build_amd_samples.sh"
+                            }
                         }
                     }
                 }                  
